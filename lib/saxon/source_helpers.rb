@@ -1,6 +1,7 @@
 module Saxon
   module SourceHelpers
-    java_import 'javax.xml.transform.stream'
+    java_import 'javax.xml.transform.Source'
+    java_import 'javax.xml.transform.stream.StreamSource'
 
     private
 
@@ -12,8 +13,8 @@ module Saxon
     # @param[String,IO] io_or_string The IO handle or the String contents
     # @return[javax.xml.transform.stream.StreamSource]
     def to_stream_source(io_or_string, system_id = nil)
-      stream_source = StreamSource.new(to_inputstream(path_io_or_string))
-      system_id ||= io_or_string.path if path_io_or_string.respond_to?(:path)
+      stream_source = StreamSource.new(to_inputstream(io_or_string))
+      system_id ||= io_or_string.path if io_or_string.respond_to?(:path)
       stream_source.setSystemId(system_id)
 
       stream_source
